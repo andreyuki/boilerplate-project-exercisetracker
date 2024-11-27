@@ -63,9 +63,8 @@ app.post('/api/users/:id/exercises', async (req,res) => {
   } else{
     date = new Date(req.body.date);
   }
-  console.log(date)
+
   const formatedDate = moment(date).utc().format('YYYY-MM-DD');
-  console.log(formatedDate)
   const user = await User.findById({_id:userId});
 
   const newExercise = new Exercise({
@@ -77,13 +76,21 @@ app.post('/api/users/:id/exercises', async (req,res) => {
   });
 
   const result = await newExercise.save();
+  // res.json({
+  //   _id: userId,
+  //   username: user.username,
+  //   date: formatedDate,
+  //   duration: duration,
+  //   description: description
+  // });
   res.json({
-    _id: userId,
     username: user.username,
-    date: formatedDate,
+    description: description,
     duration: duration,
-    description: description
+    date: formatedDate,
+    _id: userId,
   });
+
 
 })
 
