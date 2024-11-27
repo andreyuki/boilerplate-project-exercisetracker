@@ -64,7 +64,7 @@ app.post('/api/users/:id/exercises', async (req,res) => {
     date = new Date(req.body.date);
   }
 
-  const formatedDate = moment(date).utc().format('YYYY-MM-DD');
+  const formatedDate = moment(date).utc().format('ddd MMM DD YYYY');
   const user = await User.findById({_id:userId});
 
   const newExercise = new Exercise({
