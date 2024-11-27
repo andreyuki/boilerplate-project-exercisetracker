@@ -112,11 +112,10 @@ app.get('/api/users/:id/logs', async (req, res) => {
 //67469beed56ace0013aedfd7
 //67469becf6c816df558b2e66
   const count =  logs.length
-
   const formattedLogs = logs.map((log) => ({
     description: log.description,
     duration: log.duration,
-    formattedDate: new Date(log.date).toDateString(),
+    date: moment(log.date).utc().format('ddd MMM DD YYYY')
   }));
 
   res.json({
