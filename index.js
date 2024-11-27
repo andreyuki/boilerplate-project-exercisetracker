@@ -4,6 +4,7 @@ const cors = require('cors')
 const mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 require('dotenv').config()
+const moment = require('moment');
 
 const mongo_uri = process.env.MONGO_URI
 mongoose.connect(mongo_uri, { useUnifiedTopology: true });
@@ -62,8 +63,9 @@ app.post('/api/users/:id/exercises', async (req,res) => {
   } else{
     date = new Date(req.body.date);
   }
-  const formatedDate = date.toDateString();
-
+  console.log(date)
+  const formatedDate = moment(date).utc().format('YYYY-MM-DD');
+  console.log(formatedDate)
   const user = await User.findById({_id:userId});
 
   const newExercise = new Exercise({
@@ -100,7 +102,8 @@ app.get('/api/users/:id/logs', async (req, res) => {
 
   const user = await User.findById({_id:userId});
   const logs = await Exercise.find(query).sort({date: 1}).limit(limit ? parseInt(limit) : undefined);
-
+//67469beed56ace0013aedfd7
+//67469becf6c816df558b2e66
   const count =  logs.length
 
   const formattedLogs = logs.map((log) => ({
